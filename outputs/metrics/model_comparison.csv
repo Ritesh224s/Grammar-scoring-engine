@@ -1,0 +1,6 @@
+Model,Train RMSE,Val RMSE,Val Pearson r,Val MAE,Val R2
+Extra Trees,0.4808,0.7683,0.827,0.6117,0.6782
+Random Forest,0.4652,0.7736,0.8227,0.6134,0.6737
+HistGradientBoosting,0.2397,0.7834,0.8179,0.6114,0.6654
+Ridge Regression,0.7732,0.8132,0.8004,0.6345,0.6395
+Dummy (Mean Baseline),1.2062,1.3596,,1.0638,-0.0078

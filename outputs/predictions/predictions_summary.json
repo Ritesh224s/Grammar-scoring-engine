@@ -1,0 +1,37 @@
+{
+  "timestamp": "2026-10-10T22:06:43.387708",
+  "total_test_predictions": 216,
+  "prediction_range": [
+    2.3956853155492497,
+    4.692994136831133
+  ],
+  "prediction_mean": 3.3606,
+  "prediction_std": 0.5194,
+  "prediction_median": 3.2427,
+  "submission_mismatch_analysis": {
+    "test_rows": 216,
+    "sample_sub_rows": 204,
+    "row_count_equal": false,
+    "id_sets_equal": false,
+    "overlap_count": 25,
+    "test_missing_from_sample_sub_count": 191,
+    "test_missing_from_sample_sub_examples": [
+      "audio_0.wav",
+      "audio_1.wav",
+      "audio_10.wav",
+      "audio_100.wav",
+      "audio_101.wav"
+    ],
+    "sample_sub_not_in_test_count": 179,
+    "sample_sub_not_in_test_examples": [
+      "audio_1001.wav",
+      "audio_1006.wav",
+      "audio_1011.wav",
+      "audio_1025.wav",
+      "audio_1028.wav"
+    ],
+    "sample_sub_found_in_train_count": 105,
+    "is_exact_match": false,
+    "conclusion": "Mismatch detected: sample_submission.csv (204 rows) appears to be from a prior/draft split. test.csv (216 rows, audio_0.wav to audio_215.wav) represents the true evaluation set. Safe resolution: Generate predictions for all 216 test.csv rows in ['filename', 'label'] schema."
+  }
+}

@@ -1,0 +1,134 @@
+{
+  "train": {
+    "count": 769,
+    "mean_s": 55.78,
+    "std_s": 7.91,
+    "min_s": 20.06,
+    "p25_s": 54.19,
+    "median_s": 60.07,
+    "p75_s": 60.07,
+    "max_s": 61.04,
+    "num_under_30s": 14,
+    "num_over_60s": 544
+  },
+  "test": {
+    "count": 216,
+    "mean_s": 48.76,
+    "std_s": 8.18,
+    "min_s": 6.48,
+    "p25_s": 45.05,
+    "median_s": 45.06,
+    "p75_s": 60.01,
+    "max_s": 61.03,
+    "num_under_30s": 3,
+    "num_over_60s": 55
+  },
+  "overall": {
+    "total_files": 985,
+    "min_duration_s": 6.48,
+    "max_duration_s": 61.04,
+    "shortest_recording": {
+      "sample_id": "test/audio_107.wav",
+      "filename": "audio_107.wav",
+      "split": "test",
+      "duration_s": 6.48,
+      "sample_rate": 16000,
+      "channels": 1
+    },
+    "longest_recording": {
+      "sample_id": "train/audio_157.wav",
+      "filename": "audio_157.wav",
+      "split": "train",
+      "duration_s": 61.04,
+      "sample_rate": 16000,
+      "channels": 1
+    },
+    "short_recordings_count": 17,
+    "long_recordings_count": 599
+  },
+  "short_recordings_examples": [
+    {
+      "sample_id": "test/audio_107.wav",
+      "filename": "audio_107.wav",
+      "split": "test",
+      "duration_s": 6.48,
+      "sample_rate": 16000,
+      "channels": 1
+    },
+    {
+      "sample_id": "test/audio_28.wav",
+      "filename": "audio_28.wav",
+      "split": "test",
+      "duration_s": 18.56,
+      "sample_rate": 16000,
+      "channels": 1
+    },
+    {
+      "sample_id": "train/audio_251.wav",
+      "filename": "audio_251.wav",
+      "split": "train",
+      "duration_s": 20.06,
+      "sample_rate": 16000,
+      "channels": 1
+    },
+    {
+      "sample_id": "train/audio_250.wav",
+      "filename": "audio_250.wav",
+      "split": "train",
+      "duration_s": 20.12,
+      "sample_rate": 16000,
+      "channels": 1
+    },
+    {
+      "sample_id": "train/audio_249.wav",
+      "filename": "audio_249.wav",
+      "split": "train",
+      "duration_s": 20.84,
+      "sample_rate": 16000,
+      "channels": 1
+    }
+  ],
+  "long_recordings_examples": [
+    {
+      "sample_id": "train/audio_157.wav",
+      "filename": "audio_157.wav",
+      "split": "train",
+      "duration_s": 61.04,
+      "sample_rate": 16000,
+      "channels": 1
+    },
+    {
+      "sample_id": "train/audio_204.wav",
+      "filename": "audio_204.wav",
+      "split": "train",
+      "duration_s": 61.03475,
+      "sample_rate": 16000,
+      "channels": 1
+    },
+    {
+      "sample_id": "train/audio_211.wav",
+      "filename": "audio_211.wav",
+      "split": "train",
+      "duration_s": 61.03475,
+      "sample_rate": 16000,
+      "channels": 1
+    },
+    {
+      "sample_id": "train/audio_620.wav",
+      "filename": "audio_620.wav",
+      "split": "train",
+      "duration_s": 61.0346875,
+      "sample_rate": 16000,
+      "channels": 1
+    },
+    {
+      "sample_id": "train/audio_435.wav",
+      "filename": "audio_435.wav",
+      "split": "train",
+      "duration_s": 61.0346875,
+      "sample_rate": 16000,
+      "channels": 1
+    }
+  ],
+  "recommendation": "Recordings range from 6.48s to 61.04s (mean ~54.2s). All recordings are valid speech clips and must be preserved for feature extraction. Whisper handles clips <= 30s directly and stiches longer clips seamlessly."
+}

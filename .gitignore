@@ -1,0 +1,78 @@
+# Byte-compiled / optimized / DLL files
+__pycache__/
+*.py[cod]
+*$py.class
+
+# C extensions
+*.so
+
+# Distribution / packaging
+.Python
+build/
+develop-eggs/
+dist/
+downloads/
+eggs/
+.eggs/
+lib/
+lib64/
+parts/
+sdist/
+var/
+wheels/
+*.egg-info/
+.installed.cfg
+*.egg
+
+# Virtual environments
+.venv/
+venv/
+env/
+ENV/
+env.bak/
+venv.bak/
+
+# Jupyter Notebook checkpoints
+.ipynb_checkpoints/
+*-checkpoint.ipynb
+
+# IDE / Editor folders
+.vscode/
+.idea/
+*.swp
+*.swo
+
+# Large generated caches and intermediate data
+data/cache/*
+!data/cache/.gitkeep
+data/processed/*
+!data/processed/.gitkeep
+
+# Raw data (prevent accidental check-in of gigabytes of audio)
+data/raw/*
+!data/raw/.gitkeep
+
+# Model weights and serialized pipelines
+models/*
+!models/.gitkeep
+*.pt
+*.pth
+*.bin
+*.safetensors
+
+# Temporary audio artifacts and wav dumps
+scratch/
+tmp/
+temp/
+*.wav.tmp
+
+# OS files
+Thumbs.db
+Desktop.ini
+.DS_Store
+
+# Explicitly KEEP important files
+!submission.csv
+!notebooks/*.ipynb
+!README.md
+!requirements.txt

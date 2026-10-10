@@ -1,0 +1,134 @@
+{
+  "timestamp": "2026-10-10T17:23:49.936975",
+  "data_dir": "C:\\Users\\aacha\\Downloads\\shl-hiring-assessment-2026\\Dataset_Final",
+  "status": "PASSED_WITH_WARNINGS",
+  "errors": [],
+  "warnings": [
+    "test.csv contains 'label' column with values [-1]. These are dummy placeholders and must never be treated as ground truth.",
+    "212 audio filenames appear in BOTH train.csv and test.csv (e.g. 'audio_0.wav'). Handled safely: features and paths are indexed by unique sample_id ('train/...' vs 'test/...').",
+    "Submission mismatch: test.csv has 216 rows while sample_submission.csv has 204 rows. Prediction pipeline will output all 216 test samples."
+  ],
+  "paths": {
+    "train_csv": "C:\\Users\\aacha\\Downloads\\shl-hiring-assessment-2026\\Dataset_Final\\train.csv",
+    "test_csv": "C:\\Users\\aacha\\Downloads\\shl-hiring-assessment-2026\\Dataset_Final\\test.csv",
+    "sample_sub_csv": "C:\\Users\\aacha\\Downloads\\shl-hiring-assessment-2026\\Dataset_Final\\sample_submission.csv",
+    "train_audio_dir": "C:\\Users\\aacha\\Downloads\\shl-hiring-assessment-2026\\Dataset_Final\\train",
+    "test_audio_dir": "C:\\Users\\aacha\\Downloads\\shl-hiring-assessment-2026\\Dataset_Final\\test"
+  },
+  "schemas": {
+    "train_columns": [
+      "filename",
+      "label"
+    ],
+    "test_columns": [
+      "filename",
+      "label"
+    ],
+    "sample_sub_columns": [
+      "filename",
+      "label"
+    ]
+  },
+  "duplicates": {
+    "train_duplicate_filenames": 0,
+    "test_duplicate_filenames": 0,
+    "sample_sub_duplicate_filenames": 0
+  },
+  "train_labels": {
+    "total_rows": 769,
+    "missing_count": 0,
+    "non_numeric_count": 0,
+    "out_of_bounds_count": 0,
+    "unique_values_count": 10,
+    "stats": {
+      "count": 769,
+      "mean": 3.3134,
+      "std": 1.239,
+      "min": 0.0,
+      "25%": 2.5,
+      "50%": 3.0,
+      "75%": 4.0,
+      "max": 5.0
+    },
+    "errors": [],
+    "warnings": []
+  },
+  "test_label_check": {
+    "has_label_column": true,
+    "unique_values": [
+      -1
+    ],
+    "treated_as_placeholder": true
+  },
+  "audio_matching": {
+    "train": {
+      "split": "train",
+      "csv_rows": 769,
+      "audio_dir": "C:\\Users\\aacha\\Downloads\\shl-hiring-assessment-2026\\Dataset_Final\\train",
+      "total_audio_in_dir": 769,
+      "matched_count": 769,
+      "missing_count": 0,
+      "missing_files": [],
+      "unexpected_count": 0,
+      "unexpected_files": [],
+      "corrupt_count": 0,
+      "corrupt_files": [],
+      "duration_min_s": 20.06,
+      "duration_mean_s": 55.78,
+      "duration_max_s": 61.04
+    },
+    "test": {
+      "split": "test",
+      "csv_rows": 216,
+      "audio_dir": "C:\\Users\\aacha\\Downloads\\shl-hiring-assessment-2026\\Dataset_Final\\test",
+      "total_audio_in_dir": 216,
+      "matched_count": 216,
+      "missing_count": 0,
+      "missing_files": [],
+      "unexpected_count": 0,
+      "unexpected_files": [],
+      "corrupt_count": 0,
+      "corrupt_files": [],
+      "duration_min_s": 6.48,
+      "duration_mean_s": 48.76,
+      "duration_max_s": 61.03
+    }
+  },
+  "train_test_overlap": {
+    "overlapping_count": 212,
+    "resolution": "Resolved by namespacing audio with unique sample_id ('train/...' vs 'test/...').",
+    "sample_overlapping_names": [
+      "audio_0.wav",
+      "audio_1.wav",
+      "audio_10.wav",
+      "audio_100.wav",
+      "audio_101.wav"
+    ]
+  },
+  "submission_mismatch": {
+    "test_rows": 216,
+    "sample_sub_rows": 204,
+    "row_count_equal": false,
+    "id_sets_equal": false,
+    "overlap_count": 25,
+    "test_missing_from_sample_sub_count": 191,
+    "test_missing_from_sample_sub_examples": [
+      "audio_0.wav",
+      "audio_1.wav",
+      "audio_10.wav",
+      "audio_100.wav",
+      "audio_101.wav"
+    ],
+    "sample_sub_not_in_test_count": 179,
+    "sample_sub_not_in_test_examples": [
+      "audio_1001.wav",
+      "audio_1006.wav",
+      "audio_1011.wav",
+      "audio_1025.wav",
+      "audio_1028.wav"
+    ],
+    "sample_sub_found_in_train_count": 105,
+    "is_exact_match": false,
+    "conclusion": "Mismatch detected: sample_submission.csv (204 rows) appears to be from a prior/draft split. test.csv (216 rows, audio_0.wav to audio_215.wav) represents the true evaluation set. Safe resolution: Generate predictions for all 216 test.csv rows in ['filename', 'label'] schema."
+  }
+}

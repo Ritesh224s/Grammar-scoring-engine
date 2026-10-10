@@ -1,0 +1,120 @@
+{
+  "timestamp": "2026-10-10T21:52:42.997700",
+  "total_train_samples": 769,
+  "train_fold_samples": 615,
+  "val_fold_samples": 154,
+  "split_ratio": "80/20",
+  "random_seed": 42,
+  "best_model": {
+    "name": "Extra Trees",
+    "train_rmse": 0.4808,
+    "val_rmse": 0.7683,
+    "val_pearson_r": 0.827,
+    "val_mae": 0.6117,
+    "val_r2": 0.6782
+  },
+  "holdout_results": [
+    {
+      "Model": "Extra Trees",
+      "Train RMSE": 0.4808,
+      "Val RMSE": 0.7683,
+      "Val Pearson r": 0.827,
+      "Val MAE": 0.6117,
+      "Val R2": 0.6782
+    },
+    {
+      "Model": "Random Forest",
+      "Train RMSE": 0.4652,
+      "Val RMSE": 0.7736,
+      "Val Pearson r": 0.8227,
+      "Val MAE": 0.6134,
+      "Val R2": 0.6737
+    },
+    {
+      "Model": "HistGradientBoosting",
+      "Train RMSE": 0.2397,
+      "Val RMSE": 0.7834,
+      "Val Pearson r": 0.8179,
+      "Val MAE": 0.6114,
+      "Val R2": 0.6654
+    },
+    {
+      "Model": "Ridge Regression",
+      "Train RMSE": 0.7732,
+      "Val RMSE": 0.8132,
+      "Val Pearson r": 0.8004,
+      "Val MAE": 0.6345,
+      "Val R2": 0.6395
+    },
+    {
+      "Model": "Dummy (Mean Baseline)",
+      "Train RMSE": 1.2062,
+      "Val RMSE": 1.3596,
+      "Val Pearson r": NaN,
+      "Val MAE": 1.0638,
+      "Val R2": -0.0078
+    }
+  ],
+  "kfold_cv_results": {
+    "Dummy (Mean Baseline)": {
+      "cv_train_rmse_mean": 1.2377,
+      "cv_train_rmse_std": 0.0166,
+      "cv_val_rmse_mean": 1.2397,
+      "cv_val_rmse_std": 0.0634,
+      "cv_val_pearson_mean": NaN,
+      "cv_val_pearson_std": NaN,
+      "cv_val_mae_mean": 0.9982,
+      "cv_val_mae_std": 0.0347,
+      "cv_val_r2_mean": -0.0152,
+      "cv_val_r2_std": 0.0104
+    },
+    "Ridge Regression": {
+      "cv_train_rmse_mean": 0.7695,
+      "cv_train_rmse_std": 0.0117,
+      "cv_val_rmse_mean": 0.8533,
+      "cv_val_rmse_std": 0.0623,
+      "cv_val_pearson_mean": 0.7125,
+      "cv_val_pearson_std": 0.0791,
+      "cv_val_mae_mean": 0.6779,
+      "cv_val_mae_std": 0.0557,
+      "cv_val_r2_mean": 0.5079,
+      "cv_val_r2_std": 0.1119
+    },
+    "Random Forest": {
+      "cv_train_rmse_mean": 0.4574,
+      "cv_train_rmse_std": 0.0085,
+      "cv_val_rmse_mean": 0.807,
+      "cv_val_rmse_std": 0.0438,
+      "cv_val_pearson_mean": 0.7491,
+      "cv_val_pearson_std": 0.058,
+      "cv_val_mae_mean": 0.6407,
+      "cv_val_mae_std": 0.0475,
+      "cv_val_r2_mean": 0.5616,
+      "cv_val_r2_std": 0.0855
+    },
+    "Extra Trees": {
+      "cv_train_rmse_mean": 0.4797,
+      "cv_train_rmse_std": 0.0096,
+      "cv_val_rmse_mean": 0.8084,
+      "cv_val_rmse_std": 0.055,
+      "cv_val_pearson_mean": 0.7479,
+      "cv_val_pearson_std": 0.0675,
+      "cv_val_mae_mean": 0.6478,
+      "cv_val_mae_std": 0.0568,
+      "cv_val_r2_mean": 0.5589,
+      "cv_val_r2_std": 0.0972
+    },
+    "HistGradientBoosting": {
+      "cv_train_rmse_mean": 0.2551,
+      "cv_train_rmse_std": 0.0153,
+      "cv_val_rmse_mean": 0.8309,
+      "cv_val_rmse_std": 0.0494,
+      "cv_val_pearson_mean": 0.7336,
+      "cv_val_pearson_std": 0.0634,
+      "cv_val_mae_mean": 0.6607,
+      "cv_val_mae_std": 0.0491,
+      "cv_val_r2_mean": 0.5346,
+      "cv_val_r2_std": 0.0949
+    }
+  }
+}

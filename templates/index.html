@@ -1,0 +1,289 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+  <meta charset="UTF-8">
+  <meta name="viewport" content="width=device-width, initial-scale=1.0">
+  <title>SHL Grammar Scoring Engine — Automated Speech Assessment</title>
+  <meta name="description" content="Predict continuous English grammar proficiency scores (0 to 5) from spoken audio using Whisper ASR and 72-feature Extra Trees ensemble.">
+  <link rel="preconnect" href="https://fonts.googleapis.com">
+  <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+  <link href="https://fonts.googleapis.com/css2?family=Inter:wght@300;400;500;600;700;800&family=JetBrains+Mono:wght@400;500&display=swap" rel="stylesheet">
+  <link rel="stylesheet" href="/static/css/style.css">
+</head>
+<body>
+  <!-- Header / Nav -->
+  <header class="app-header">
+    <div class="header-container">
+      <div class="logo-group">
+        <div class="logo-icon">
+          <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2" stroke-linecap="round" stroke-linejoin="round">
+            <path d="M12 2a3 3 0 0 0-3 3v7a3 3 0 0 0 6 0V5a3 3 0 0 0-3-3Z"></path>
+            <path d="M19 10v2a7 7 0 0 1-14 0v-2"></path>
+            <line x1="12" y1="19" x2="12" y2="22"></line>
+          </svg>
+        </div>
+        <div>
+          <h1 class="brand-title">SHL Grammar Scoring Engine</h1>
+          <p class="brand-subtitle">Automated Continuous Proficiency Assessment (0.0 – 5.0)</p>
+        </div>
+      </div>
+      <div class="status-badges">
+        <span class="badge badge-primary" id="modelBadge">
+          <span class="badge-dot pulse"></span> Model: Extra Trees (72 Features)
+        </span>
+        <span class="badge badge-secondary" id="deviceBadge">
+          <span class="badge-dot"></span> ASR: Whisper Base
+        </span>
+      </div>
+    </div>
+  </header>
+
+  <!-- Main Container -->
+  <main class="main-content">
+    <div class="content-container">
+      
+      <!-- Intro Hero Banner -->
+      <section class="hero-section">
+        <h2>Evaluate English Spoken Grammar in Real Time</h2>
+        <p>Upload a WAV voice recording (~45–60s) to transcribe speech via <strong>Whisper ASR</strong>, extract <strong>72 acoustic, lexical, and syntactic features</strong>, and predict a continuous grammar score calibrated against official human examiner ratings.</p>
+      </section>
+
+      <!-- Input Grid -->
+      <section class="input-grid">
+        <!-- Card 1: File Upload -->
+        <div class="card upload-card">
+          <div class="card-header">
+            <div class="card-icon">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <path d="M21 15v4a2 2 0 0 1-2 2H5a2 2 0 0 1-2-2v-4"></path>
+                <polyline points="17 8 12 3 7 8"></polyline>
+                <line x1="12" y1="3" x2="12" y2="15"></line>
+              </svg>
+            </div>
+            <div>
+              <h3>Upload Voice Recording</h3>
+              <p>Supports mono/stereo WAV files (16–48 kHz)</p>
+            </div>
+          </div>
+
+          <form id="uploadForm" class="upload-form">
+            <div class="drop-zone" id="dropZone">
+              <div class="drop-icon">
+                <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="1.8">
+                  <path d="M9 18V5l12-2v13"></path>
+                  <circle cx="6" cy="18" r="3"></circle>
+                  <circle cx="18" cy="16" r="3"></circle>
+                </svg>
+              </div>
+              <p class="drop-text"><strong>Click to browse</strong> or drag and drop a <code>.wav</code> file here</p>
+              <span class="drop-hint">Recommended duration: 45–60 seconds</span>
+              <input type="file" id="audioInput" name="audio" accept=".wav,audio/wav,audio/x-wav" class="file-input">
+            </div>
+
+            <!-- Selected File Info & Audio Player -->
+            <div class="file-preview-bar" id="filePreviewBar" style="display: none;">
+              <div class="file-meta">
+                <span class="file-icon">🎵</span>
+                <span class="file-name" id="selectedFileName">audio.wav</span>
+                <span class="file-size" id="selectedFileSize">0 KB</span>
+              </div>
+              <audio id="audioPreview" controls class="audio-player"></audio>
+              <button type="button" class="btn-clear" id="clearFileBtn" title="Remove file">&times;</button>
+            </div>
+
+            <!-- Action Button -->
+            <button type="submit" class="btn-primary" id="analyzeBtn" disabled>
+              <span class="btn-text">Analyze Grammar Score</span>
+              <span class="btn-icon">➔</span>
+            </button>
+          </form>
+        </div>
+
+        <!-- Card 2: Quick Test with Dataset Samples -->
+        <div class="card samples-card">
+          <div class="card-header">
+            <div class="card-icon icon-cyan">
+              <svg viewBox="0 0 24 24" fill="none" stroke="currentColor" stroke-width="2">
+                <circle cx="12" cy="12" r="10"></circle>
+                <polygon points="10 8 16 12 10 16 10 8"></polygon>
+              </svg>
+            </div>
+            <div>
+              <h3>Test with Benchmark Samples</h3>
+              <p>Instant evaluation using curated dataset recordings</p>
+            </div>
+          </div>
+
+          <div class="samples-list" id="samplesList">
+            <div class="sample-skeleton">Loading benchmark samples...</div>
+          </div>
+
+          <div class="pipeline-spec">
+            <h4>Inference Pipeline Highlights</h4>
+            <ul>
+              <li><strong>Model</strong>: Extra Trees Regressor (100 estimators, max depth 8)</li>
+              <li><strong>ASR Model</strong>: <code>openai/whisper-base.en</code> (FP16 on GPU)</li>
+              <li><strong>Validation Performance</strong>: Holdout RMSE 0.7683 | Pearson r 0.8270</li>
+              <li><strong>Training RMSE</strong>: 0.5144 (In-sample across all 769 records)</li>
+              <li><strong>Test Set Agreement</strong>: Evaluates exact 72-feature schema</li>
+            </ul>
+          </div>
+        </div>
+      </section>
+
+      <!-- Loading State Overlay -->
+      <section class="loading-section" id="loadingSection" style="display: none;">
+        <div class="spinner-container">
+          <div class="spinner-ring"></div>
+          <div class="spinner-inner"></div>
+        </div>
+        <h3 class="loading-title" id="loadingStepTitle">Processing Audio...</h3>
+        <p class="loading-desc" id="loadingStepDesc">Speech-to-text transcription running with Whisper ASR</p>
+        <div class="progress-steps">
+          <div class="step-item active" id="step1">1. Audio Decoding & Validation</div>
+          <div class="step-item" id="step2">2. Whisper Speech Transcription</div>
+          <div class="step-item" id="step3">3. 72-Feature Extraction</div>
+          <div class="step-item" id="step4">4. Regression Scoring</div>
+        </div>
+      </section>
+
+      <!-- Error Banner -->
+      <section class="error-banner" id="errorBanner" style="display: none;">
+        <div class="error-icon">⚠️</div>
+        <div class="error-content">
+          <h4 id="errorTitle">Evaluation Error</h4>
+          <p id="errorMessage">An unexpected error occurred during processing.</p>
+        </div>
+        <button class="btn-close-error" id="closeErrorBtn">&times;</button>
+      </section>
+
+      <!-- Results Dashboard Section -->
+      <section class="results-section" id="resultsSection" style="display: none;">
+        <div class="results-header">
+          <h2>Grammar Assessment Results</h2>
+          <span class="eval-speed" id="evalSpeedBadge">Processed in 2.1s</span>
+        </div>
+
+        <div class="results-grid">
+          <!-- Primary Score Card -->
+          <div class="card score-card">
+            <div class="score-container">
+              <div class="radial-gauge-wrapper">
+                <svg class="radial-gauge" viewBox="0 0 160 160">
+                  <circle class="gauge-bg" cx="80" cy="80" r="68"></circle>
+                  <circle class="gauge-fill" id="gaugeFill" cx="80" cy="80" r="68"></circle>
+                </svg>
+                <div class="gauge-content">
+                  <span class="score-value" id="scoreDisplay">0.0</span>
+                  <span class="score-max">/ 5.0</span>
+                </div>
+              </div>
+              <div class="score-details">
+                <span class="proficiency-tag" id="proficiencyTag">Proficient</span>
+                <p class="percentile-text" id="percentileText">Top 30% of candidate pool</p>
+                <p class="proficiency-desc" id="proficiencyDesc">Demonstrates strong grammatical accuracy and varied sentence patterns.</p>
+                <div class="score-bounds-bar">
+                  <div class="bounds-label"><span>0.0</span><span>Novice</span><span>Competent</span><span>Native-like</span><span>5.0</span></div>
+                  <div class="bounds-track"><div class="bounds-marker" id="boundsMarker"></div></div>
+                </div>
+              </div>
+            </div>
+          </div>
+
+          <!-- Speech Transcript Card -->
+          <div class="card transcript-card">
+            <div class="card-header-compact">
+              <div class="header-left">
+                <span class="header-icon">📝</span>
+                <h3>Recognized Speech Transcript</h3>
+              </div>
+              <button class="btn-copy" id="copyTranscriptBtn" title="Copy transcript to clipboard">
+                <span id="copyIcon">📋</span> <span id="copyText">Copy</span>
+              </button>
+            </div>
+            <div class="transcript-box" id="transcriptBox">
+              <p id="transcriptText">Transcript will appear here...</p>
+            </div>
+          </div>
+        </div>
+
+        <!-- 6 Linguistic & Acoustic Feature Metric Cards -->
+        <h3 class="metrics-section-title">Multimodal Linguistic & Acoustic Indicators</h3>
+        <div class="metrics-grid">
+          <!-- Metric 1: Speaking Rate -->
+          <div class="metric-card">
+            <div class="metric-icon icon-blue">🗣️</div>
+            <div class="metric-info">
+              <span class="metric-label">Speaking Rate</span>
+              <span class="metric-val" id="metricWpm">0 WPM</span>
+              <span class="metric-sub">Target: 110–140 WPM</span>
+            </div>
+          </div>
+
+          <!-- Metric 2: Lexical Diversity -->
+          <div class="metric-card">
+            <div class="metric-icon icon-purple">📚</div>
+            <div class="metric-info">
+              <span class="metric-label">Lexical Diversity (TTR)</span>
+              <span class="metric-val" id="metricTtr">0.00</span>
+              <span class="metric-sub">Type-Token Ratio</span>
+            </div>
+          </div>
+
+          <!-- Metric 3: Total Words -->
+          <div class="metric-card">
+            <div class="metric-icon icon-cyan">💬</div>
+            <div class="metric-info">
+              <span class="metric-label">Total Words Spoken</span>
+              <span class="metric-val" id="metricWordCount">0</span>
+              <span class="metric-sub" id="metricSentenceCount">0 sentences</span>
+            </div>
+          </div>
+
+          <!-- Metric 4: Syntactic Subordination -->
+          <div class="metric-card">
+            <div class="metric-icon icon-green">🌳</div>
+            <div class="metric-info">
+              <span class="metric-label">Subordination Index</span>
+              <span class="metric-val" id="metricSubordination">0.00</span>
+              <span class="metric-sub">Clause complexity ratio</span>
+            </div>
+          </div>
+
+          <!-- Metric 5: Disfluency & Fillers -->
+          <div class="metric-card">
+            <div class="metric-icon icon-amber">⏸️</div>
+            <div class="metric-info">
+              <span class="metric-label">Fillers & Hesitations</span>
+              <span class="metric-val" id="metricFillers">0</span>
+              <span class="metric-sub">Overt fillers ('um', 'uh', etc.)</span>
+            </div>
+          </div>
+
+          <!-- Metric 6: Silence Ratio -->
+          <div class="metric-card">
+            <div class="metric-icon icon-rose">⏱️</div>
+            <div class="metric-info">
+              <span class="metric-label">Silence / Pause Ratio</span>
+              <span class="metric-val" id="metricSilenceRatio">0.0%</span>
+              <span class="metric-sub" id="metricDuration">Duration: 0.0s</span>
+            </div>
+          </div>
+        </div>
+
+      </section>
+
+    </div>
+  </main>
+
+  <!-- Footer -->
+  <footer class="app-footer">
+    <div class="footer-container">
+      <p>SHL Hiring Assessment 2026 • Grammar Scoring Engine • Powered by Whisper Base ASR & Extra Trees Regressor</p>
+      <p class="footer-sub">Trained on 769 human-evaluated English recordings • Compulsory In-sample RMSE: 0.5144 • Holdout RMSE: 0.7683</p>
+    </div>
+  </footer>
+
+  <script src="/static/js/app.js"></script>
+</body>
+</html>
